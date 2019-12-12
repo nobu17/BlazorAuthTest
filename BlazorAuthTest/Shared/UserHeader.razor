@@ -23,7 +23,7 @@
     public async Task LogoutAsync()
     {
         await AuthService.LogoutAsync();
-        Navigation.NavigateTo("");
+        Navigation.NavigateTo("", false);
     }
 
     public void OnClickMenu(MouseEventArgs e)
