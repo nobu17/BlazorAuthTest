@@ -1,0 +1,33 @@
+﻿@page "/login"
+
+@inherits ViewModel.LoginViewModel
+
+<LoadingScreen IsLoading="@IsLoading" />
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+            <h3 style="text-align:center;"> Login</h3>
+            <p>利用可能アカウント(id, pass)</p>
+            <ul>
+                <li>demo demo</li>
+                <li>demo2 demo2</li>
+            </ul>
+        </div>
+        <EditForm Model="@LoginData" OnValidSubmit="SubmitAsync" class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="mat-layout-grid-inner">
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                    <MatTextField FullWidth="true" Label="UserID" @bind-Value="@LoginData.UserID"></MatTextField>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12">
+                    <MatTextField FullWidth="true" Label="Password" @bind-Value="@LoginData.Password" Type="password"></MatTextField>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-12 mat-layout-grid-align-right">
+                    <MatButton Label="Login" Outlined="true" Type="submit"></MatButton>
+                </div>
+            </div>
+            <p style="color:red;">@ErrorMessage</p>
+        </EditForm>
+    </div>
+</div>

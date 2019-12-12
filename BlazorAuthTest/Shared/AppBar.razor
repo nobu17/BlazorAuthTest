@@ -1,0 +1,44 @@
+﻿@inject NavigationManager Navigation
+<MatAppBar Fixed="true" Style="background-color:midnightblue">
+    <MatAppBarRow>
+        <MatAppBarSection>
+            <MatIconButton Icon="menu" OnClick="@OnClickMenu" @ref="Button"></MatIconButton>
+            <MatMenu @ref="Menu">
+                <MatList>
+                    @foreach (var menu in this.MenuItems)
+                    {
+                        <MatListItem OnClick="@(e => OnSelectMenu(menu.Item2))"> @menu.Item1</MatListItem>
+                    }
+                </MatList>
+            </MatMenu>
+            <MatAppBarTitle>BlazorLogin Test</MatAppBarTitle>
+        </MatAppBarSection>
+        <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+            <UserHeader />
+        </MatAppBarSection>
+    </MatAppBarRow>
+</MatAppBar>
+
+@code {
+    MatIconButton Button;
+    BaseMatMenu Menu;
+    List<Tuple<string, string>> MenuItems;
+
+    protected override void OnInitialized()
+    {
+        MenuItems = new List<Tuple<string, string>>();
+        MenuItems.Add(Tuple.Create("home", ""));
+        MenuItems.Add(Tuple.Create("cascade", "cascade"));
+        MenuItems.Add(Tuple.Create("counter(need login)", "counter"));
+    }
+
+    public void OnClickMenu(MouseEventArgs e)
+    {
+        this.Menu.OpenAsync(Button.Ref);
+    }
+
+    public void OnSelectMenu(string url)
+    {
+        Navigation.NavigateTo(url, false);
+    }
+}

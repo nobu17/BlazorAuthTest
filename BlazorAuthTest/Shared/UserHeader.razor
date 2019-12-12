@@ -1,0 +1,33 @@
+﻿@inject NavigationManager Navigation
+<AuthorizeView>
+    <Authorized>
+        <MatIconButton Icon="person" OnClick="@OnClickMenu" @ref="Button"></MatIconButton>
+        <MatMenu @ref="Menu">
+            <MatList>
+                <p style="text-align:center; margin:3px;">@context.User.Identity.Name さん</p>
+                <MatListItem OnClick="@(e => LogoutAsync())">Logout</MatListItem>
+            </MatList>
+        </MatMenu>
+    </Authorized>
+    <Authorizing>
+        <p>Authrizing....</p>
+    </Authorizing>
+</AuthorizeView>
+@code {
+    [Inject]
+    protected Services.Auth.IAuthService AuthService { get; set; }
+
+    MatIconButton Button;
+    BaseMatMenu Menu;
+
+    public async Task LogoutAsync()
+    {
+        await AuthService.LogoutAsync();
+        Navigation.NavigateTo("/");
+    }
+
+    public void OnClickMenu(MouseEventArgs e)
+    {
+        this.Menu.OpenAsync(Button.Ref);
+    }
+}

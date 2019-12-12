@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<h1>ログインテスト</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <p>ようこそ @context.User.Identity.Name さん！</p>
+        @if (context.User.IsInRole("Admin"))
+        {
+            <p>あなたは管理者です。</p>
+        }
+        else if (context.User.IsInRole("User"))
+        {
+            <p>あなたは一般ユーザです。</p>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>ようこそゲストさん！</p>
+    </NotAuthorized>
+</AuthorizeView>

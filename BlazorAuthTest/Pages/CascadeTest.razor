@@ -1,0 +1,39 @@
+﻿@page "/cascade"
+<CascadingAuthenticationState>
+    <h3>CascadeTest</h3>
+    <input type="button" @onclick="@DisplayAuth" value="display current user state" />
+    <p>@Message</p>
+</CascadingAuthenticationState>
+
+@code {
+    [CascadingParameter]
+    Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    string Message { get; set; }
+
+    async Task DisplayAuth()
+    {
+        var user = (await AuthenticationStateTask).User;
+
+        Message = string.Empty;
+        //認証済みの場合
+        if (user.Identity.IsAuthenticated)
+        {
+            Message += $"こんにちは、{user.Identity.Name} さん。";
+            if (user.IsInRole("Admin"))
+            {
+                Message += "あなたは管理者です。";
+            }
+            else if (user.IsInRole("User"))
+            {
+                Message += "あなたは一般ユーザです。";
+            }
+        }
+        else
+        {
+            Message += "こんにちは ゲスト さん。";
+        }
+    }
+}
+
+
